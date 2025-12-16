@@ -1,0 +1,27 @@
+package com.mycompany.educationsys.dto;
+
+public class ResisterResponse {
+    private boolean isSuccessful;
+    private String message;
+
+    public ResisterResponse(boolean isSuccessful, String message) {
+        this.isSuccessful = isSuccessful;
+        this.message = message;
+    }
+
+    public boolean isSuccessful() {
+        return isSuccessful;
+    }
+
+    public void setSuccessful(boolean successful) {
+        isSuccessful = successful;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+}

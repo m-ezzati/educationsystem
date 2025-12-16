@@ -1,6 +1,7 @@
 package com.mycompany.educationsys.entity;
 
 import com.mycompany.educationsys.entity.base.BaseEntity;
+import com.mycompany.educationsys.entity.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,7 +20,9 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
-    private boolean enabled = true;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserStatus status = UserStatus.PENDING;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -30,6 +33,14 @@ public class User extends BaseEntity {
     private Set<Role> roles;
 
     public User() {
+    }
+
+    public User(String username, String email, String password, UserStatus status, Set<Role> roles) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.status = status;
+        this.roles = roles;
     }
 
     public String getUsername() {
@@ -56,12 +67,12 @@ public class User extends BaseEntity {
         this.password = password;
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    public UserStatus getStatus() {
+        return status;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setStatus(UserStatus status) {
+        this.status = status;
     }
 
     public Set<Role> getRoles() {

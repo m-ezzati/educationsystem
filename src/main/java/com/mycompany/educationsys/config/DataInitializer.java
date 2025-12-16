@@ -1,5 +1,6 @@
 package com.mycompany.educationsys.config;
 
+import com.mycompany.educationsys.entity.enums.UserStatus;
 import com.mycompany.educationsys.repository.RoleRepository;
 import com.mycompany.educationsys.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,8 +21,6 @@ public class DataInitializer {
 
     @Value("${admin.username}")
     private String adminUsername;
-
-
 
     @Value("${admin.password}")
     private String adminPassword;
@@ -45,7 +44,7 @@ public class DataInitializer {
             admin.setEmail(adminEmail);
             admin.setPassword(passwordEncoder.encode(adminPassword));
             admin.setUsername(adminUsername);
-            admin.setEnabled(true);
+            admin.setStatus(UserStatus.APPROVED);
             admin.setRoles(Set.of(adminRole));
 
             userRepository.save(admin);
