@@ -45,7 +45,7 @@ public class DataInitializer {
             admin.setPassword(passwordEncoder.encode(adminPassword));
             admin.setUsername(adminUsername);
             admin.setStatus(UserStatus.APPROVED);
-            admin.setRoles(Set.of(adminRole));
+            admin.setRole(adminRole);
 
             userRepository.save(admin);
             System.out.println("Admin user created: username=" + adminUsername + ", password=" + adminPassword);

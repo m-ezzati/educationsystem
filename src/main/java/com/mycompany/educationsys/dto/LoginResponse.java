@@ -2,23 +2,20 @@ package com.mycompany.educationsys.dto;
 
 import com.mycompany.educationsys.entity.Role;
 
-import java.util.Optional;
-import java.util.Set;
-
 public class LoginResponse {
     private String token;
-    private Set<Role> roles;
+    private String roleName;
     private String message;
 
 
-    public LoginResponse(String token, Set<Role> roles, String message) {
+    public LoginResponse(String token, String roleName, String message) {
         this.token = token;
-        this.roles = roles;
+        this.roleName = roleName;
         this.message = message;
     }
 
     public String getToken() { return token; }
-    public Set<Role> getRoles() { return roles; }
+    public String getRoleName() { return roleName; }
     public String getMessage() {
         return message;
     }

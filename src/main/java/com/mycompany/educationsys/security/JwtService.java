@@ -5,7 +5,6 @@ import com.mycompany.educationsys.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.context.support.BeanDefinitionDsl;
 import org.springframework.stereotype.Service;
 import java.util.Date;
 
@@ -20,11 +19,8 @@ public class JwtService {
     public String generateToken(User user) {
         return Jwts.builder()
                 .setSubject(user.getUsername())
-                .claim("roles", user.getRoles()
-                        .stream()
-                        .map(Role::getRoleName)
-                        .collect(Collectors.joining(",")))
-                .setIssuedAt(new Date())  // java.util.Date
+                .claim("roles", user.getRole().getRoleName())
+                .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();

@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -37,7 +38,6 @@ public class UserService {
         if (user.getStatus() != UserStatus.APPROVED) {
             throw new RuntimeException("User account is not approved yet");
         }
-
         return user;
     }
 
@@ -55,8 +55,13 @@ public class UserService {
             throw new RuntimeException("Invalid role!");
         }
 
-        User user = new User(username, email, passwordEncoder.encode(password), UserStatus.PENDING, Set.of(role.get()));
+        User user = new User(username, email, passwordEncoder.encode(password), UserStatus.PENDING, role.get());
         userRepository.save(user);
+    }
+
+    public List<User> findAll(){
+        System.out.println("find all service");
+        return userRepository.findAll();
     }
 
     private boolean isUsernameExist(String username) {

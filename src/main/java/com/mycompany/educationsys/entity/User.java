@@ -3,7 +3,6 @@ package com.mycompany.educationsys.entity;
 import com.mycompany.educationsys.entity.base.BaseEntity;
 import com.mycompany.educationsys.entity.enums.UserStatus;
 import jakarta.persistence.*;
-import lombok.*;
 
 import java.util.Set;
 
@@ -24,23 +23,19 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private UserStatus status = UserStatus.PENDING;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
+    private Role role;
 
     public User() {
     }
 
-    public User(String username, String email, String password, UserStatus status, Set<Role> roles) {
+    public User(String username, String email, String password, UserStatus status, Role role) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.status = status;
-        this.roles = roles;
+        this.role = role;
     }
 
     public String getUsername() {
@@ -75,11 +70,11 @@ public class User extends BaseEntity {
         this.status = status;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
