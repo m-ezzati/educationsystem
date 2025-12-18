@@ -19,7 +19,7 @@ public class JwtService {
     public String generateToken(User user) {
         return Jwts.builder()
                 .setSubject(user.getUsername())
-                .claim("roles", user.getRole().getRoleName())
+                .claim("role", user.getRole().getRoleName())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
@@ -27,6 +27,7 @@ public class JwtService {
     }
 
     public Claims validateToken(String token) {
+        System.out.println("validate token" + token);
         return Jwts.parser()
                 .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)

@@ -35,12 +35,14 @@ public class JwtFilter extends OncePerRequestFilter {
                 var claims = jwtService.validateToken(token);
                 String username = claims.getSubject();
                 String role = claims.get("role", String.class);
-
                 var auth = new UsernamePasswordAuthenticationToken(
                         username,
                         null,
                         List.of(new SimpleGrantedAuthority(role))
                 );
+
+                System.out.println("JWT role: " + role);
+                System.out.println("Authorities: " + auth.getAuthorities());
 
                 SecurityContextHolder
                         .getContext()
@@ -50,12 +52,13 @@ public class JwtFilter extends OncePerRequestFilter {
                 throw new AuthenticationException("Invalid Authentication");
             }
         }
+        System.out.println("before chain");
         filterChain.doFilter(request, response);
     }
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
-        return path.equals("/login") || path.equals("/register");
+        return path.equals("/login") || path.equals("/register") || request.getMethod().equals("OPTIONS");
     }
 }

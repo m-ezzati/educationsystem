@@ -64,6 +64,14 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public void approveUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setStatus(UserStatus.APPROVED);
+        userRepository.save(user);
+    }
+
     private boolean isUsernameExist(String username) {
         return userRepository
                 .findByUsername(username)
