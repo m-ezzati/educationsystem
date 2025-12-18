@@ -4,6 +4,8 @@ import com.mycompany.educationsys.dto.RegisterRequest;
 import com.mycompany.educationsys.entity.Role;
 import com.mycompany.educationsys.entity.User;
 import com.mycompany.educationsys.entity.enums.UserStatus;
+import com.mycompany.educationsys.exception.ForbiddenActionException;
+import com.mycompany.educationsys.exception.UserNotFoundException;
 import com.mycompany.educationsys.repository.RoleRepository;
 import com.mycompany.educationsys.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
@@ -60,7 +62,6 @@ public class UserService {
     }
 
     public List<User> findAll(){
-        System.out.println("find all service");
         return userRepository.findAll();
     }
 
@@ -86,6 +87,21 @@ public class UserService {
 
     private Optional<Role> fetchRole(String role) {
         return roleRepository.findByRoleName("ROLE_" + role);
+    }
+
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    public void disableUser(Long id) {
+        User user = findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        if (user.getRole().getRoleName().equals("ROLE_ADMIN")) {
+            throw new ForbiddenActionException("Cannot disable admin");
+        }
+        user.setStatus(UserStatus.DISABLED);
+        userRepository.save(user);
     }
 
 }

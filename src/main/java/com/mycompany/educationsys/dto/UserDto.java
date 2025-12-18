@@ -2,27 +2,21 @@ package com.mycompany.educationsys.dto;
 
 import com.mycompany.educationsys.entity.enums.UserStatus;
 
-public class UserDTO {
+public class UserDto {
     private Long id;
     private String username;
     private String email;
     private String roleName;
-    private boolean isApproved;
+    private UserStatus status;
 
-    // constructor
-    public UserDTO(Long id, String username, String email, String role, UserStatus status) {
+    public UserDto(Long id, String username, String email, String role, UserStatus status) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.roleName = role;
-        if(status == UserStatus.APPROVED){
-            this.isApproved = true;
-        }else {
-            this.isApproved =false;
-        }
+        this.status = status;
     }
 
-    // getters
     public Long getId() { return id; }
     public String getUsername() { return username; }
     public String getEmail() { return email; }
@@ -30,7 +24,8 @@ public class UserDTO {
     public String getRoleName() {
         return roleName;
     }
-    public boolean isApproved() {
-        return isApproved;
+
+    public UserStatus getStatus() {
+        return status;
     }
 }

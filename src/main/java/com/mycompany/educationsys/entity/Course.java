@@ -8,8 +8,11 @@ import java.util.Set;
 
 @Entity
 public class Course extends BaseEntity {
+
+    @Column(nullable = false)
     private String courseName;
-    private String courseIdentity;
+    @Column(nullable = false, unique = true)
+    private String courseCode;
     private LocalDate stratDate;
     private LocalDate endDate;
 
@@ -36,12 +39,12 @@ public class Course extends BaseEntity {
         this.courseName = courseName;
     }
 
-    public String getCourseIdentity() {
-        return courseIdentity;
+    public String getCourseCode() {
+        return courseCode;
     }
 
-    public void setCourseIdentity(String courseIdentity) {
-        this.courseIdentity = courseIdentity;
+    public void setCourseCode(String courseIdentity) {
+        this.courseCode = courseIdentity;
     }
 
     public LocalDate getStratDate() {

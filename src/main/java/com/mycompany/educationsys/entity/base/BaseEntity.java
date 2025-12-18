@@ -29,6 +29,7 @@ public class BaseEntity {
 
     // Getters and setters
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
     public Instant getCreatedAt() { return createdAt; }
     public Instant getUpdatedAt() { return updatedAt; }
 }
