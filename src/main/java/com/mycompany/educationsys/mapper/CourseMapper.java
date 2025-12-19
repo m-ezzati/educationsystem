@@ -15,12 +15,12 @@ public class CourseMapper {
         dto.setTeacher(course.getTeacher());
         dto.setStartDate(course.getStratDate());
         dto.setEndDate(course.getEndDate());
+        dto.setTeacher(course.getTeacher());
         return dto;
     }
 
     public Course toEntity(CourseDto dto){
         if (dto == null) return null;
-
         Course course = new Course();
         course.setId(dto.getId());
         course.setCourseName(dto.getCourseName());

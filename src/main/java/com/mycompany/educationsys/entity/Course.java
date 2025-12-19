@@ -1,6 +1,7 @@
 package com.mycompany.educationsys.entity;
 
 import com.mycompany.educationsys.entity.base.BaseEntity;
+import com.mycompany.educationsys.entity.enums.CourseStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -15,6 +16,10 @@ public class Course extends BaseEntity {
     private String courseCode;
     private LocalDate stratDate;
     private LocalDate endDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CourseStatus courseStatus = CourseStatus.ACTIVE;
 
     @ManyToOne
     @JoinColumn(name = "teacher_id")
@@ -77,5 +82,13 @@ public class Course extends BaseEntity {
 
     public void setStudents(Set<User> students) {
         this.students = students;
+    }
+
+    public CourseStatus getCourseStatus() {
+        return courseStatus;
+    }
+
+    public void setCourseStatus(CourseStatus courseStatus) {
+        this.courseStatus = courseStatus;
     }
 }

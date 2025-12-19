@@ -3,6 +3,7 @@ package com.mycompany.educationsys.dto;
 import com.mycompany.educationsys.entity.User;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class CourseDto {
     private Long id;
@@ -11,10 +12,11 @@ public class CourseDto {
     private LocalDate startDate;
     private LocalDate endDate;
     private User teacher;
+    private List<User> students;
 
     public CourseDto(){}
     public CourseDto(Long id, String courseName, String courseCode, LocalDate stratDate, LocalDate endDate) {
-        this.id = id;
+//        this.id = id;
         this.courseName = courseName;
         this.courseCode = courseCode;
         this.startDate = stratDate;
@@ -28,6 +30,14 @@ public class CourseDto {
         this.startDate = stratDate;
         this.endDate = endDate;
         this.teacher = teacher;
+    }
+
+    public List<User> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<User> students) {
+        this.students = students;
     }
 
     public Long getId() {
