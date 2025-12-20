@@ -1,12 +1,9 @@
 package com.mycompany.educationsys.controller;
 
 import com.mycompany.educationsys.dto.CourseDto;
-import com.mycompany.educationsys.dto.ResisterResponse;
 import com.mycompany.educationsys.dto.UpdateCourseDto;
-import com.mycompany.educationsys.exception.CourseNotFoundException;
-import com.mycompany.educationsys.exception.UserNotFoundException;
 import com.mycompany.educationsys.mapper.CourseMapper;
-import com.mycompany.educationsys.services.CourseService;
+import com.mycompany.educationsys.services.impl.CourseServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,10 +14,10 @@ import java.util.List;
 @RestController
 public class CourseController {
 
-    private final CourseService courseService;
+    private final CourseServiceImpl courseService;
     private final CourseMapper courseMapper;
 
-    public CourseController(CourseService courseService, CourseMapper courseMapper) {
+    public CourseController(CourseServiceImpl courseService, CourseMapper courseMapper) {
         this.courseService = courseService;
         this.courseMapper = courseMapper;
     }
