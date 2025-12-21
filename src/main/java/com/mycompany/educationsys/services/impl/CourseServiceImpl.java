@@ -3,9 +3,11 @@ package com.mycompany.educationsys.services.impl;
 import com.mycompany.educationsys.dto.CourseDto;
 import com.mycompany.educationsys.dto.UpdateCourseDto;
 import com.mycompany.educationsys.entity.Course;
+import com.mycompany.educationsys.entity.Role;
 import com.mycompany.educationsys.entity.User;
 import com.mycompany.educationsys.entity.enums.CourseStatus;
 import com.mycompany.educationsys.exception.CourseNotFoundException;
+import com.mycompany.educationsys.exception.ForbiddenActionException;
 import com.mycompany.educationsys.exception.UserNotFoundException;
 import com.mycompany.educationsys.mapper.CourseMapper;
 import com.mycompany.educationsys.repository.CourseRepository;
@@ -72,8 +74,24 @@ public class CourseServiceImpl implements CourseService {
         User professor = userRepository.findById(professorId)
                 .orElseThrow(() -> new UserNotFoundException("Professor not found"));
 
+        if(!isProfessor(professor.getRole())){
+            throw new ForbiddenActionException("The selected user is not a teacher.");
+        }
         course.setTeacher(professor);
         courseRepository.save(course);
+    }
+
+    @Override
+    public void assignStudent(Long courseId, Long studentId) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new CourseNotFoundException("Course not found"));
+
+        User student = userRepository.findById(studentId)
+                .orElseThrow(() -> new UserNotFoundException("Student not found"));
+        if(!isStudent(student.getRole())){
+            throw new ForbiddenActionException("The selected user is not a student.");
+        }
+//        course.setStudents(course.getStudents());
     }
 
     private boolean isExistsCourseCode(String courseCode){
@@ -85,6 +103,12 @@ public class CourseServiceImpl implements CourseService {
         return courseRepository
                 .findByCourseNameIgnoreCase(courseName)
                 .isPresent();
+    }
+    private boolean isProfessor(Role role){
+        return role.getRoleName().equals("ROLE_TEACHER");
+    }
+    private boolean isStudent(Role role){
+        return role.getRoleName().equals("ROLE_STUDENT");
     }
 
 }

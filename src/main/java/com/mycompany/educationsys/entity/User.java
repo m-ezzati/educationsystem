@@ -4,6 +4,7 @@ import com.mycompany.educationsys.entity.base.BaseEntity;
 import com.mycompany.educationsys.entity.enums.UserStatus;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -26,6 +27,9 @@ public class User extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @OneToMany(mappedBy = "student")
+    private Set<Enrollment> enrollments = new HashSet<>();
 
     public User() {
     }
@@ -78,4 +82,11 @@ public class User extends BaseEntity {
         this.role = role;
     }
 
+    public Set<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(Set<Enrollment> enrollments) {
+        this.enrollments = enrollments;
+    }
 }

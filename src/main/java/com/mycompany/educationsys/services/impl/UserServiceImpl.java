@@ -70,7 +70,29 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        if (!isAdmin(user.getRole())) {
+            throw new ForbiddenActionException("Only the admin can approve the user.");
+        }
+
         user.setStatus(UserStatus.APPROVED);
+        userRepository.save(user);
+    }
+
+    @Override
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    @Override
+    public void disableUser(Long id) {
+        User user = findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        if (isAdmin(user.getRole())) {
+            throw new ForbiddenActionException("Cannot disable admin");
+        }
+
+        user.setStatus(UserStatus.DISABLED);
         userRepository.save(user);
     }
 
@@ -90,19 +112,7 @@ public class UserServiceImpl implements UserService {
         return roleRepository.findByRoleName("ROLE_" + role);
     }
 
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+    private boolean isAdmin(Role role){
+        return role.getRoleName().equals("ROLE_ADMIN");
     }
-
-    public void disableUser(Long id) {
-        User user = findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
-
-        if (user.getRole().getRoleName().equals("ROLE_ADMIN")) {
-            throw new ForbiddenActionException("Cannot disable admin");
-        }
-        user.setStatus(UserStatus.DISABLED);
-        userRepository.save(user);
-    }
-
 }

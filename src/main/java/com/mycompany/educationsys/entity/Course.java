@@ -5,6 +5,9 @@ import com.mycompany.educationsys.entity.enums.CourseStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,13 +28,8 @@ public class Course extends BaseEntity {
     @JoinColumn(name = "teacher_id")
     private User teacher;
 
-    @ManyToMany
-    @JoinTable(
-            name="course_students",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id")
-    )
-    private Set<User> students;
+    @OneToMany(mappedBy = "course")
+    private Set<Enrollment> enrollments =  new HashSet<>();
 
     public Course() {
     }
@@ -76,19 +74,19 @@ public class Course extends BaseEntity {
         this.teacher = teacher;
     }
 
-    public Set<User> getStudents() {
-        return students;
-    }
-
-    public void setStudents(Set<User> students) {
-        this.students = students;
-    }
-
     public CourseStatus getCourseStatus() {
         return courseStatus;
     }
 
     public void setCourseStatus(CourseStatus courseStatus) {
         this.courseStatus = courseStatus;
+    }
+
+    public Set<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(Set<Enrollment> enrollments) {
+        this.enrollments = enrollments;
     }
 }

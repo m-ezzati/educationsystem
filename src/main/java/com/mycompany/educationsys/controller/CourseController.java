@@ -64,9 +64,10 @@ public class CourseController {
                     .body(e.getMessage());
         }
     }
+
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/assignProfessor/{courseId}/{professorId}")
-    public ResponseEntity<?> updateCourse(
+    public ResponseEntity<?> assignProfessor(
             @PathVariable Long professorId,
             @PathVariable Long courseId)
     {
@@ -90,5 +91,15 @@ public class CourseController {
                 .toList();
     }
 
+    @PreAuthorize(("hasRole('ADMIN')"))
+    @GetMapping("/admin/assignStudent/{courseId}/{studentId}")
+    public ResponseEntity<?> assignStudent(
+            @PathVariable Long courseId,
+            @PathVariable Long studentId
+    ){
+        try{
+            courseService.assignStudent(courseId, studentId);
+        }
+    }
 
 }
