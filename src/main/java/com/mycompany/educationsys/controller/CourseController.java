@@ -84,7 +84,6 @@ public class CourseController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin/fetchAllCourse")
     public List<CourseDto> fetchAllCourse() {
-        System.out.println("fetch all course ");
         return courseService.findAll()
                 .stream()
                 .map(courseMapper::toDto)
@@ -92,13 +91,18 @@ public class CourseController {
     }
 
     @PreAuthorize(("hasRole('ADMIN')"))
-    @GetMapping("/admin/assignStudent/{courseId}/{studentId}")
+    @PostMapping("/admin/assignStudent/{courseId}/{studentId}")
     public ResponseEntity<?> assignStudent(
             @PathVariable Long courseId,
             @PathVariable Long studentId
     ){
         try{
             courseService.assignStudent(courseId, studentId);
+            return ResponseEntity.ok("Student Successfully assigned");
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
         }
     }
 

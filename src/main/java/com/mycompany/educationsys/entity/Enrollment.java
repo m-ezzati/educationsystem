@@ -1,7 +1,7 @@
     package com.mycompany.educationsys.entity;
 
     import com.mycompany.educationsys.entity.base.BaseEntity;
-    import jakarta.persistence.Column;
+
     import jakarta.persistence.Entity;
     import jakarta.persistence.JoinColumn;
     import jakarta.persistence.ManyToOne;
@@ -18,6 +18,22 @@
         @ManyToOne(optional = false)
         @JoinColumn(name = "student_id")
         private User student;
+
+        public Course getCourse() {
+            return course;
+        }
+
+        public void setCourse(Course course) {
+            this.course = course;
+        }
+
+        public User getStudent() {
+            return student;
+        }
+
+        public void setStudent(User student) {
+            this.student = student;
+        }
 
         @Override
         public boolean equals(Object o) {
