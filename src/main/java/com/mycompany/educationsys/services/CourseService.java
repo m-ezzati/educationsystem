@@ -4,6 +4,7 @@ import com.mycompany.educationsys.dto.CourseDto;
 import com.mycompany.educationsys.dto.UpdateCourseDto;
 import com.mycompany.educationsys.entity.Course;
 import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -18,6 +19,4 @@ public interface CourseService {
     void deleteCourse(Long id);
 
     void assignProfessor(Long courseId, Long professorId);
-
-    void assignStudent(Long courseId, Long studentId);
 }

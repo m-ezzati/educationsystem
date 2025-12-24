@@ -90,20 +90,4 @@ public class CourseController {
                 .toList();
     }
 
-    @PreAuthorize(("hasRole('ADMIN')"))
-    @PostMapping("/admin/assignStudent/{courseId}/{studentId}")
-    public ResponseEntity<?> assignStudent(
-            @PathVariable Long courseId,
-            @PathVariable Long studentId
-    ){
-        try{
-            courseService.assignStudent(courseId, studentId);
-            return ResponseEntity.ok("Student Successfully assigned");
-        } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(e.getMessage());
-        }
-    }
-
 }
