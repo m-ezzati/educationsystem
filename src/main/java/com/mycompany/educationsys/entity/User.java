@@ -31,6 +31,9 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "student")
     private Set<Enrollment> enrollments = new HashSet<>();
 
+    @OneToOne
+    private QuestionBank questionBank;
+
     public User() {
     }
 
