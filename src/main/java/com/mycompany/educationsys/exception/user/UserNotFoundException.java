@@ -1,4 +1,4 @@
-package com.mycompany.educationsys.exception;
+package com.mycompany.educationsys.exception.user;
 
 public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException(Object id) {

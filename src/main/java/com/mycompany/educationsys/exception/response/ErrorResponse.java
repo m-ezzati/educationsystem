@@ -1,4 +1,4 @@
-package com.mycompany.educationsys.exception;
+package com.mycompany.educationsys.exception.response;
 
 public class ErrorResponse {
     private String code;

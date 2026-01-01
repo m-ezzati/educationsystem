@@ -21,16 +21,12 @@ import java.util.List;
 public class CourseController {
 
     private final CourseServiceImpl courseService;
-    private final CourseMapper courseMapper;
     private final AuthService authService;
-    private final ExamRepository examRepository;
     private final ExamService examService;
 
-    public CourseController(CourseServiceImpl courseService, CourseMapper courseMapper, AuthService authService, ExamRepository examRepository, ExamService examService) {
+    public CourseController(CourseServiceImpl courseService,  AuthService authService, ExamService examService) {
         this.courseService = courseService;
-        this.courseMapper = courseMapper;
         this.authService = authService;
-        this.examRepository = examRepository;
         this.examService = examService;
     }
 

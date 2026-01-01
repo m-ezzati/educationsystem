@@ -1,24 +1,22 @@
-package com.mycompany.educationsys.entity.question;
+package com.mycompany.educationsys.dto;
 
-import com.mycompany.educationsys.entity.QuestionBank;
-import com.mycompany.educationsys.entity.base.BaseEntity;
 import com.mycompany.educationsys.entity.question.emuns.DifficultyLevel;
 import com.mycompany.educationsys.entity.question.emuns.QuestionStatus;
-import jakarta.persistence.*;
 
-@Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class Question extends BaseEntity {
+import java.util.Set;
+
+public class CreateQuestionRequest {
     private String title;
     private String description;
     private QuestionStatus status;
     private DifficultyLevel difficultyLevel;
 
-    @ManyToOne
-    @JoinColumn(name = "question_bank_id")
-    private QuestionBank questionBank;
+    private Set<String> options;
 
-    public Question(){}
+    private String questionType;
+
+    public CreateQuestionRequest() {
+    }
 
     public String getTitle() {
         return title;
@@ -52,11 +50,19 @@ public abstract class Question extends BaseEntity {
         this.difficultyLevel = difficultyLevel;
     }
 
-    public QuestionBank getQuestionBank() {
-        return questionBank;
+    public Set<String> getOptions() {
+        return options;
     }
 
-    public void setQuestionBank(QuestionBank questionBank) {
-        this.questionBank = questionBank;
+    public void setOptions(Set<String> options) {
+        this.options = options;
+    }
+
+    public String getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(String questionType) {
+        this.questionType = questionType;
     }
 }

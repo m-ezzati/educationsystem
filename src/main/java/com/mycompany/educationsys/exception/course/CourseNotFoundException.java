@@ -1,4 +1,4 @@
-package com.mycompany.educationsys.exception;
+package com.mycompany.educationsys.exception.course;
 
 public class CourseNotFoundException extends RuntimeException {
     public CourseNotFoundException(Object id) {

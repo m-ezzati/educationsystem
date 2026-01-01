@@ -31,7 +31,7 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "student")
     private Set<Enrollment> enrollments = new HashSet<>();
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private QuestionBank questionBank;
 
     public User() {
@@ -91,5 +91,13 @@ public class User extends BaseEntity {
 
     public void setEnrollments(Set<Enrollment> enrollments) {
         this.enrollments = enrollments;
+    }
+
+    public QuestionBank getQuestionBank() {
+        return questionBank;
+    }
+
+    public void setQuestionBank(QuestionBank questionBank) {
+        this.questionBank = questionBank;
     }
 }

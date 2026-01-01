@@ -4,7 +4,7 @@ import com.mycompany.educationsys.entity.Role;
 import com.mycompany.educationsys.entity.User;
 import com.mycompany.educationsys.entity.enums.UserStatus;
 import com.mycompany.educationsys.exception.ForbiddenActionException;
-import com.mycompany.educationsys.exception.UserNotFoundException;
+import com.mycompany.educationsys.exception.user.UserNotFoundException;
 import com.mycompany.educationsys.repository.RoleRepository;
 import com.mycompany.educationsys.repository.UserRepository;
 import com.mycompany.educationsys.services.UserService;

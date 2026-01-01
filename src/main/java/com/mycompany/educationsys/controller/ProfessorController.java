@@ -1,7 +1,6 @@
 package com.mycompany.educationsys.controller;
 
 import com.mycompany.educationsys.dto.CourseDto;
-import com.mycompany.educationsys.entity.Course;
 import com.mycompany.educationsys.mapper.CourseMapper;
 import com.mycompany.educationsys.security.AuthService;
 import com.mycompany.educationsys.services.CourseService;
@@ -17,13 +16,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/teacher")
 @PreAuthorize("hasRole('TEACHER')")
-public class TeacherController {
+public class ProfessorController {
 
     private final CourseService courseService;
     private final AuthService authService;
     private final CourseMapper courseMapper;
 
-    public TeacherController(CourseServiceImpl courseService, AuthService authService, CourseMapper courseMapper) {
+    public ProfessorController(CourseServiceImpl courseService, AuthService authService, CourseMapper courseMapper) {
         this.courseService = courseService;
         this.authService = authService;
         this.courseMapper = courseMapper;
@@ -31,9 +30,9 @@ public class TeacherController {
 
     @GetMapping("/me/courses")
     public List<CourseDto> getMyCourses(HttpServletRequest request) {
-        Long teacherId = authService.getCurrentUserId(request);
+        Long professorId = authService.getCurrentUserId(request);
         return courseService
-                .findCoursesByTeacher(teacherId)
+                .findCoursesByTeacher(professorId)
                 .stream()
                 .map(courseMapper::toDto)
                 .toList();

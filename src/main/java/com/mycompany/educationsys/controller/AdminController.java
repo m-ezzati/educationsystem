@@ -2,7 +2,7 @@
     
     import com.mycompany.educationsys.dto.UserDto;
     import com.mycompany.educationsys.exception.ForbiddenActionException;
-    import com.mycompany.educationsys.exception.UserNotFoundException;
+    import com.mycompany.educationsys.exception.user.UserNotFoundException;
     import com.mycompany.educationsys.services.impl.UserServiceImpl;
     import org.springframework.http.HttpStatus;
     import org.springframework.http.ResponseEntity;

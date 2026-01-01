@@ -1,4 +1,4 @@
-package com.mycompany.educationsys.exception;
+package com.mycompany.educationsys.exception.exam;
 
 public class ExamNotFoundException extends RuntimeException {
     public ExamNotFoundException(Long id) {
