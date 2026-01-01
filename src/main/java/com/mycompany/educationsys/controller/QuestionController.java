@@ -1,17 +1,13 @@
 package com.mycompany.educationsys.controller;
 
-import com.mycompany.educationsys.dto.CreateQuestionRequest;
-import com.mycompany.educationsys.entity.User;
+import com.mycompany.educationsys.dto.QuestionDto;
 import com.mycompany.educationsys.security.AuthService;
 import com.mycompany.educationsys.services.QuestionService;
 import com.mycompany.educationsys.services.impl.QuestionServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/questions")
@@ -25,13 +21,14 @@ public class QuestionController {
     }
 
     @PreAuthorize("hasRole('TEACHER')")
-    @PostMapping("/add")
+    @PostMapping("/add/{courseId}")
     public ResponseEntity<?> addQuestion(
             HttpServletRequest request,
-            @RequestBody CreateQuestionRequest questionDto)
+            @PathVariable Long courseId,
+            @RequestBody QuestionDto questionDto)
     {
         Long professorId = authService.getCurrentUserId(request);
-        questionService.addQuestion(professorId, questionDto);
+        questionService.addQuestion(professorId, courseId, questionDto);
 
         return ResponseEntity
                 .ok("Question successfully added");

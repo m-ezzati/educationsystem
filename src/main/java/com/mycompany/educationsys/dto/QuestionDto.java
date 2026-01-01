@@ -5,7 +5,7 @@ import com.mycompany.educationsys.entity.question.emuns.QuestionStatus;
 
 import java.util.Set;
 
-public class CreateQuestionRequest {
+public class QuestionDto {
     private String title;
     private String description;
     private QuestionStatus status;
@@ -15,7 +15,7 @@ public class CreateQuestionRequest {
 
     private String questionType;
 
-    public CreateQuestionRequest() {
+    public QuestionDto() {
     }
 
     public String getTitle() {

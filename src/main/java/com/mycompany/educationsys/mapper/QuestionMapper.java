@@ -1,6 +1,6 @@
 package com.mycompany.educationsys.mapper;
 
-import com.mycompany.educationsys.dto.CreateQuestionRequest;
+import com.mycompany.educationsys.dto.QuestionDto;
 import com.mycompany.educationsys.entity.question.Question;
 import com.mycompany.educationsys.exception.question.InvalidQuestionType;
 import com.mycompany.educationsys.factory.question.QuestionFactory;
@@ -16,12 +16,24 @@ public class QuestionMapper {
         this.factories = factories;
     }
 
-    public Question toEntity(CreateQuestionRequest request) {
+    public Question toEntity(QuestionDto dto) {
         return factories.stream()
-                .filter(f -> f.supports(request.getQuestionType()))
+                .filter(f -> f.supports(dto.getQuestionType()))
                 .findFirst()
                 .orElseThrow(InvalidQuestionType::new)
-                .create(request);
+                .create(dto);
+    }
+
+    public QuestionDto toDto(Question question){
+        System.out.println("to dto" + factories.stream()
+                .filter(f -> f.supports(question.getClass().getSimpleName())).findFirst());
+
+        System.out.println("befor err");
+        return factories.stream()
+                .filter(f -> f.supports(question.getClass().getSimpleName()))
+                .findFirst()
+                .orElseThrow(InvalidQuestionType::new)
+                .createDto(question);
     }
 
 }
