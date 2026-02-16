@@ -2,7 +2,7 @@ package com.mycompany.educationsys.mapper;
 
 import com.mycompany.educationsys.dto.ExamDto;
 import com.mycompany.educationsys.entity.Course;
-import com.mycompany.educationsys.entity.Exam;
+import com.mycompany.educationsys.entity.exam.Exam;
 import org.springframework.stereotype.Component;
 @Component
 public class ExamMapper {

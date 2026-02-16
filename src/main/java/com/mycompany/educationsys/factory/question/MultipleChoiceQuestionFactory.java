@@ -47,7 +47,6 @@ public class MultipleChoiceQuestionFactory implements QuestionFactory{
         questionDto.setDifficultyLevel(question.getDifficultyLevel());
         questionDto.setQuestionType("MULTIPLE_CHOICE");
 
-
         if(question.getOptions() != null && !question.getOptions().isEmpty()){
             Set<String> options = new HashSet<>();
             question.getOptions()
@@ -56,7 +55,6 @@ public class MultipleChoiceQuestionFactory implements QuestionFactory{
                     });
             questionDto.setOptions(options);
         }
-        System.out.println("exit dto multi " + question );
 
         return questionDto;
     }

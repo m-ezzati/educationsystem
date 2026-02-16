@@ -27,10 +27,11 @@ public class QuestionController {
             @PathVariable Long courseId,
             @RequestBody QuestionDto questionDto)
     {
+        System.out.println("controller");
         Long professorId = authService.getCurrentUserId(request);
         questionService.addQuestion(professorId, courseId, questionDto);
 
         return ResponseEntity
-                .ok("Question successfully added");
+                .ok("Question successfully added to exam");
     }
 }

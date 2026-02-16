@@ -7,15 +7,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class CourseMapper {
     public CourseDto toDto(Course course) {
+        System.out.println("mapper");
         if (course == null) return null;
         CourseDto dto = new CourseDto();
         dto.setId(course.getId());
         dto.setCourseName(course.getCourseName());
         dto.setCourseCode(course.getCourseCode());
-        dto.setTeacher(course.getTeacher());
         dto.setStartDate(course.getStratDate());
         dto.setEndDate(course.getEndDate());
-        dto.setTeacher(course.getTeacher());
+        System.out.println("mapper + " + dto);
         return dto;
     }
 
@@ -25,7 +25,6 @@ public class CourseMapper {
         course.setId(dto.getId());
         course.setCourseName(dto.getCourseName());
         course.setCourseCode(dto.getCourseCode());
-        course.setTeacher(dto.getTeacher());
         course.setStratDate(dto.getStartDate());
         course.setEndDate(dto.getEndDate());
 

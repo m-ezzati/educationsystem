@@ -28,7 +28,6 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
     @Override
     public void enrollStudent(Long courseId, Long studentId) {
-        System.out.println("enrollStudent service");
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new CourseNotFoundException("Course not found"));
 
@@ -39,7 +38,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
             throw new ForbiddenActionException("The selected user is not a student.");
         }
 
-        if(enrollmentRepository.existsByStudentAndCourse(student, course)){
+        if(isStudentEnrolledCourse(student, course)){
             throw new ForbiddenActionException("The user already enrolled in this course.");
         }
 
@@ -63,4 +62,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         return enrollment;
     }
 
+    protected boolean isStudentEnrolledCourse(User student, Course course){
+        return enrollmentRepository.existsByStudentAndCourse(student, course);
+    }
 }

@@ -1,9 +1,12 @@
-package com.mycompany.educationsys.entity;
+package com.mycompany.educationsys.entity.exam;
 
+import com.mycompany.educationsys.entity.Course;
+import com.mycompany.educationsys.entity.User;
 import com.mycompany.educationsys.entity.base.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Exam extends BaseEntity {
@@ -13,11 +16,21 @@ public class Exam extends BaseEntity {
 
     private String title;
     private String description;
-    private Integer duration; // min
+    private Integer duration;
+
+    @Column(nullable = false)
+    private Short tryCountAllowed = 1;
 
     @ManyToOne
     @JoinColumn(name = "professor_id")
     private User professor;
+
+    @OneToMany(
+            mappedBy = "exam",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<ExamQuestion> examQuestions = new HashSet<>();
 
     public Exam(){}
 
@@ -59,5 +72,21 @@ public class Exam extends BaseEntity {
 
     public void setProfessor(User professor) {
         this.professor = professor;
+    }
+
+    public Set<ExamQuestion> getExamQuestions() {
+        return examQuestions;
+    }
+
+    public void setExamQuestions(Set<ExamQuestion> examQuestions) {
+        this.examQuestions = examQuestions;
+    }
+
+    public Short getTryCountAllowed() {
+        return tryCountAllowed;
+    }
+
+    public void setTryCountAllowed(Short tryCountAllowed) {
+        this.tryCountAllowed = tryCountAllowed;
     }
 }

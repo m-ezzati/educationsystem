@@ -24,7 +24,7 @@ public class CourseController {
     private final AuthService authService;
     private final ExamService examService;
 
-    public CourseController(CourseServiceImpl courseService,  AuthService authService, ExamService examService) {
+    public CourseController(CourseServiceImpl courseService, AuthService authService, ExamService examService) {
         this.courseService = courseService;
         this.authService = authService;
         this.examService = examService;
@@ -33,43 +33,25 @@ public class CourseController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin/addCourse")
     public ResponseEntity<?> addCourse(@RequestBody CourseDto courseDto) {
-        try {
-            courseService.addCourse(courseDto);
-            return ResponseEntity
-                    .ok("Course successfully added");
-        } catch (RuntimeException e) {
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body("message " + e.getMessage());
-        }
+        courseService.addCourse(courseDto);
+        return ResponseEntity
+                .ok("Course successfully added");
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin/deleteCourse/{id}")
     public ResponseEntity<?> disableCourse(@PathVariable Long id) {
         System.out.println("delete course ");
-        try {
-            courseService.deleteCourse(id);
-            return ResponseEntity
-                    .ok("Course successfully added");
-        } catch (RuntimeException e) {
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(e.getMessage());
-        }
+        courseService.deleteCourse(id);
+        return ResponseEntity
+                .ok("Course successfully deleted");
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/updateCourse/{id}")
     public ResponseEntity<?> updateCourse(@PathVariable Long id, @RequestBody UpdateCourseDto dto) {
-        try {
-            courseService.updateCourse(id, dto);
-            return ResponseEntity.ok("Course updated successfully");
-        } catch (RuntimeException e) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(e.getMessage());
-        }
+        courseService.updateCourse(id, dto);
+        return ResponseEntity.ok("Course updated successfully");
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -77,14 +59,10 @@ public class CourseController {
     public ResponseEntity<?> assignProfessor(
             @PathVariable Long professorId,
             @PathVariable Long courseId) {
-        try {
-            courseService.assignProfessor(courseId, professorId);
-            return ResponseEntity.ok("Professor Successfully assigned");
-        } catch (RuntimeException e) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(e.getMessage());
-        }
+
+        courseService.assignProfessor(courseId, professorId);
+        return ResponseEntity.ok("Professor Successfully assigned");
+
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -100,15 +78,11 @@ public class CourseController {
             @RequestBody CreateExamRequest createExamRequest,
             HttpServletRequest request) {
         Long professorId = authService.getCurrentUserId(request);
-        try {
-            examService.addExam(professorId, courseId, createExamRequest);
-            return ResponseEntity.ok("Exam Successfully added");
-        } catch (RuntimeException e) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(e.getMessage());
-        }
+        System.out.println("controller");
+        examService.addExam(professorId, courseId, createExamRequest);
+        return ResponseEntity.ok("Exam Successfully added");
     }
+
     @PutMapping("/courses/{examId}/editExam")
     @PreAuthorize("hasRole('TEACHER')")
     public ResponseEntity<?> editExam(
@@ -116,29 +90,18 @@ public class CourseController {
             @RequestBody CreateExamRequest createExamRequest,
             HttpServletRequest request) {
         Long professorId = authService.getCurrentUserId(request);
-        try {
-            examService.editExam(professorId, examId, createExamRequest);
-            return ResponseEntity.ok("Exam Successfully edited");
-        } catch (RuntimeException e) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(e.getMessage());
-        }
+        examService.editExam(professorId, examId, createExamRequest);
+        return ResponseEntity.ok("Exam Successfully edited");
     }
+
     @DeleteMapping("/courses/{examId}/deleteExam")
     @PreAuthorize("hasRole('TEACHER')")
     public ResponseEntity<?> deleteExam(
             @PathVariable Long examId,
             HttpServletRequest request) {
         Long professorId = authService.getCurrentUserId(request);
-        try {
-            examService.deleteExam(examId, professorId);
-            return ResponseEntity.ok("Exam Successfully deleted");
-        } catch (RuntimeException e) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(e.getMessage());
-        }
+        examService.deleteExam(examId, professorId);
+        return ResponseEntity.ok("Exam Successfully deleted");
     }
 
     @GetMapping("/courses/{courseId}/getExams")
@@ -151,8 +114,7 @@ public class CourseController {
     @PreAuthorize("hasRole('TEACHER')")
     public List<ExamDto> findExamsByCourseForProfessor(
             @PathVariable Long courseId,
-            HttpServletRequest request)
-    {
+            HttpServletRequest request) {
         Long professorId = authService.getCurrentUserId(request);
         return courseService.findExamsByCourseAndProfessor(courseId, professorId);
     }

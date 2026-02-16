@@ -3,6 +3,7 @@ package com.mycompany.educationsys.entity.question;
 import com.mycompany.educationsys.entity.Course;
 import com.mycompany.educationsys.entity.QuestionBank;
 import com.mycompany.educationsys.entity.base.BaseEntity;
+import com.mycompany.educationsys.entity.exam.ExamQuestion;
 import com.mycompany.educationsys.entity.question.emuns.DifficultyLevel;
 import com.mycompany.educationsys.entity.question.emuns.QuestionStatus;
 import jakarta.persistence.*;
@@ -28,6 +29,13 @@ public abstract class Question extends BaseEntity {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Option> options = new HashSet<>();
+
+    @OneToMany(
+            mappedBy = "question",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<ExamQuestion> examQuestions = new HashSet<>();
 
     public Question(){}
 
@@ -85,5 +93,13 @@ public abstract class Question extends BaseEntity {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public Set<ExamQuestion> getExamQuestions() {
+        return examQuestions;
+    }
+
+    public void setExamQuestions(Set<ExamQuestion> examQuestions) {
+        this.examQuestions = examQuestions;
     }
 }

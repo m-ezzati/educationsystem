@@ -33,8 +33,8 @@ public class Course extends BaseEntity {
 
 
 
-    public Course() {
-    }
+//    public Course() {
+//    }
 
     public String getCourseName() {
         return courseName;

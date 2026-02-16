@@ -22,6 +22,8 @@ public interface CourseService {
 
     List<Course> findCoursesByTeacher(Long teacherId);
 
+    List<Course> findCoursesByStudent(Long studentId);
+
     List<ExamDto> findExamsByCourse(Long courseId);
 
     List<ExamDto> findExamsByCourseAndProfessor(Long courseId, Long professorId);

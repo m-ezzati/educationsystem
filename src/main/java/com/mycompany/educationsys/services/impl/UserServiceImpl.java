@@ -1,5 +1,6 @@
 package com.mycompany.educationsys.services.impl;
 
+import com.mycompany.educationsys.entity.Course;
 import com.mycompany.educationsys.entity.Role;
 import com.mycompany.educationsys.entity.User;
 import com.mycompany.educationsys.entity.enums.UserStatus;
@@ -8,6 +9,7 @@ import com.mycompany.educationsys.exception.user.UserNotFoundException;
 import com.mycompany.educationsys.repository.RoleRepository;
 import com.mycompany.educationsys.repository.UserRepository;
 import com.mycompany.educationsys.services.UserService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -70,8 +72,8 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (!isAdmin(user.getRole())) {
-            throw new ForbiddenActionException("Only the admin can approve the user.");
+        if (!hasRole(user.getRole(), "ROLE_ADMIN")) {
+            throw new ForbiddenActionException("Only admin can approve the user.");
         }
 
         user.setStatus(UserStatus.APPROVED);
@@ -88,7 +90,7 @@ public class UserServiceImpl implements UserService {
         User user = findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-        if (isAdmin(user.getRole())) {
+        if (hasRole(user.getRole(), "ROLE_ADMIN")) {
             throw new ForbiddenActionException("Cannot disable admin");
         }
 
@@ -112,7 +114,29 @@ public class UserServiceImpl implements UserService {
         return roleRepository.findByRoleName("ROLE_" + role);
     }
 
-    private boolean isAdmin(Role role){
-        return role.getRoleName().equals("ROLE_ADMIN");
+//    protected boolean isAdmin(Role role){
+//        return role.getRoleName().equals("ROLE_ADMIN");
+//    }
+//
+//    protected boolean isProfessor(Role role){
+//        return role.getRoleName().equals("ROLE_TEACHER");
+//    }
+//
+//    protected boolean isStudent(Role role) {
+//        return role.getRoleName().equals("ROLE_STUDENT");
+//    }
+
+    protected boolean hasRole(Role role, String roleType){
+        return role!=null && role.getRoleName().equals(roleType);
     }
+
+    protected User getUserById(Long userId){
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found" + userId));
+    }
+
+    protected boolean isProfessorOwner(Course course, Long professorId) {
+        return course.getTeacher().getId().equals(professorId);
+    }
+
 }

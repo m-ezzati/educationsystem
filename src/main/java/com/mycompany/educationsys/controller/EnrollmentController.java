@@ -20,14 +20,9 @@ public class EnrollmentController {
 
     @PostMapping("/admin/enrollStudent")
     public ResponseEntity<String> enrollStudent(@RequestBody EnrollmentRequest request) {
-        System.out.println("enrollStudent");
-        try{
-            enrollmentService.enrollStudent(request.getCourseId(), request.getStudentId());
-            return ResponseEntity.ok("Student Successfully assigned");
-        } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(e.getMessage());
-        }
+
+        enrollmentService.enrollStudent(request.getCourseId(), request.getStudentId());
+        return ResponseEntity.ok("Student Successfully assigned");
+
     }
 }

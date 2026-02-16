@@ -13,6 +13,7 @@ public class QuestionMapper {
     private final List<QuestionFactory> factories;
 
     public QuestionMapper(List<QuestionFactory> factories) {
+
         this.factories = factories;
     }
 
@@ -25,10 +26,6 @@ public class QuestionMapper {
     }
 
     public QuestionDto toDto(Question question){
-        System.out.println("to dto" + factories.stream()
-                .filter(f -> f.supports(question.getClass().getSimpleName())).findFirst());
-
-        System.out.println("befor err");
         return factories.stream()
                 .filter(f -> f.supports(question.getClass().getSimpleName()))
                 .findFirst()
